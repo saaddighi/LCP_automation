@@ -41,14 +41,19 @@ def welcome_email():
                             body = """Thanks for applying! Our current cohort is full.
                             You'll be notified as soon as the next cohort opens.
                             Stay tuned for updates."""
-
-                        yag.send(to=recipient_email, subject=subject, contents=body)
-                        print(f"Email sent to {recipient_email} for row {row_index + 1}")
+                        if new_row[16] == "sent":
+                            pass
+                        else:
+                            yag.send(to=recipient_email, subject=subject, contents=body)
+                            print(f"Email sent to {recipient_email} for row {row_index + 1}")
+                            sheet.update_cell(int(new_row[0]) + 1, 17, "sent")
 
                 previous_row_count = current_row_count
-
+                
             time.sleep(30)
 
         except Exception as e:
             print(f"Error: {e}")
             time.sleep(30)
+
+print(previous_row_count)
