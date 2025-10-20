@@ -1,13 +1,14 @@
 import time
 from emailer.email_sheet import sheet
 import yagmail
+from emailer.MT5_encryption import assign_account, decrypt_account
 
 EMAIL_ADDRESS = "saaddighi20@gmail.com"
 EMAIL_PASSWORD = "xazc vkyw oqjo qdei"  
 yag = yagmail.SMTP(EMAIL_ADDRESS, EMAIL_PASSWORD)
 
 previous_row_count = len(sheet.get_all_values())
-members_nb = sum(1 for row in sheet.get_all_values() if row[8] == "cohort_2_member")
+members_nb = sum(1 for row in sheet.get_all_values() if row[3] == "cohort_2")
 cohort_status = "open" if members_nb < 10 else "close"
 
 def welcome_email():
@@ -21,7 +22,7 @@ def welcome_email():
             if current_row_count > previous_row_count:
                 for row_index in range(previous_row_count, current_row_count):
                     new_row = current_data[row_index]
-                    if new_row:
+                    if new_row and new_row[5] == 'yes':
                         recipient_email = new_row[2]
                         trader_name = new_row[1] if len(new_row) > 1 else "Trader"
 
@@ -47,6 +48,7 @@ def welcome_email():
                             yag.send(to=recipient_email, subject=subject, contents=body)
                             print(f"Email sent to {recipient_email} for row {row_index + 1}")
                             sheet.update_cell(int(new_row[0]) + 1, 17, "sent")
+                            sheet.update_cell(int(new_row[0]) + 1, 4, "cohort_2")
 
                 previous_row_count = current_row_count
                 
@@ -56,4 +58,27 @@ def welcome_email():
             print(f"Error: {e}")
             time.sleep(30)
 
-print(previous_row_count)
+
+def first_assessment_email(traderid):
+    id = traderid
+    assign_account(id)
+    credentials = decrypt_account(id)
+    data = sheet.get_all_values()
+    for row in data:
+        if row[0] == id:
+            recipient_email = row[2]
+            name = row[1]
+            subject = "Your TM5 Trading Account Credentials"
+            body = f"""
+                        Hi {name},
+
+                        Welcome aboard! 
+
+                        Your TM5 trading account has been successfully created. Here are your credentials to get started:
+
+                        - Username: {credentials['username']}
+                        - Password: {credentials['password']}
+
+                        Please make sure to:Log in at {credentials["link"]}.
+                    """
+            yag.send(to=recipient_email, subject=subject, contents=body)

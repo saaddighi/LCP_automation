@@ -15,6 +15,8 @@ def signup():
     if request.method == 'POST':
         full_name = request.form['full_name'].strip()
         email = request.form['email'].strip().lower()
+        discord_id = request.form['discord_id'].strip()
+        has_traded = request.form['has_traded'].strip()
 
         data = sheet.get_all_values()
         headers = data[0] if data else []
@@ -27,6 +29,10 @@ def signup():
 
         next_id = len(rows) + 1
         sheet.append_row([next_id, full_name, email])
+        cell = sheet.find(email)
+        row_index = cell.row
+        sheet.update_cell(row_index, 16, discord_id)
+        sheet.update_cell(row_index, 6, has_traded)
         flash("✅ Successfully signed up!")
         return redirect('/signup')
 
