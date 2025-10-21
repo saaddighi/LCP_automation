@@ -11,7 +11,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # === IMPORTS CORRIGÉS ===
 from emailer.email_sheet import sheet
-from emailer.mailer import yag
+from emailer.mailer import first_assessment_email
 
 TOKEN = os.getenv('DISCORD_TOKEN')
 intents = discord.Intents.all()
@@ -87,16 +87,6 @@ async def surveiller_formulaires():
                     sheet.update_cell(i, 5, nouveau_statut)  # Colonne E - status
                     if cohorte != "waiting":
                         sheet.update_cell(i, 4, cohorte)  # Colonne D - cohort_id
-                    
-                    # ENVOI D'EMAILS
-                    if nouveau_statut == "active":
-                        subject = "👋 Welcome to Lotus Capital!"
-                        body = f"Congratulations! You've been accepted into Cohort {cohorte}. Join our Discord to start."
-                        yag.send(to=email, subject=subject, contents=body)
-                    else:
-                        subject = "Application Status - Waitlist"
-                        body = "Thanks for applying! Current cohort is full. We'll notify you when next cohort opens."
-                        yag.send(to=email, subject=subject, contents=body)
         
         # NOTIFICATIONS
         if nouvelles_soumissions > 0:
@@ -280,7 +270,7 @@ async def on_member_join(member):
             
             # === MESSAGE DE BIENVENUE POUR TOUS ===
             await member.send("🎉 **BIENVENUE SUR LOTUS CAPITAL !**\n\nNous sommes ravis de vous accueillir dans notre communauté de traders !")
-            
+            first_assessment_email(discord_username_in_sheet)
             if statut == "active" and cohorte and cohorte != "waiting":
                 # Assigner rôle et salon privé
                 role = discord.utils.get(member.guild.roles, name=f"Cohorte {cohorte}")
@@ -324,4 +314,5 @@ ping_thread.start()
 
 print("🔄 Auto-ping activé!")
 
-bot.run(TOKEN)
+def run_bot():
+    bot.run("TOKEN")
