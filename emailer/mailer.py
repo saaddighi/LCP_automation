@@ -22,11 +22,11 @@ def welcome_email():
             if current_row_count > previous_row_count:
                 for row_index in range(previous_row_count, current_row_count):
                     new_row = current_data[row_index]
-                    if new_row and new_row[5] == 'yes':
+                    if new_row and new_row[5] == 'Yes':
                         recipient_email = new_row[2]
                         trader_name = new_row[1] if len(new_row) > 1 else "Trader"
 
-                        discord_invite = "https://discord.gg/VwJTH65k"
+                        discord_invite = "https://discord.gg/KTWXtJWW"
 
                         if cohort_status == "open":
                             subject = f"👋 Welcome to Lotus Capital Trader Cohort, {trader_name}!"
