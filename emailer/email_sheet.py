@@ -1,7 +1,7 @@
 import gspread
 from google.oauth2.service_account import Credentials
 
-SERVICE_ACCOUNT_FILE = "/home/saad/Documents/automate/account.json"
+SERVICE_ACCOUNT_FILE = "path/account.json"
 SCOPES = ["https://www.googleapis.com/auth/spreadsheets.readonly",
           "https://www.googleapis.com/auth/spreadsheets"]
 
