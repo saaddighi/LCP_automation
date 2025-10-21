@@ -26,7 +26,7 @@ def assign_account(id):
     worksheet = sheet.get_all_values()
 
     for row in worksheet[1:]:
-        if row[0] == id:
+        if row[18] == id:
             sheet.update_cell(int(row[0]) + 1, 10, encrypted_b64)
             sheet.update_cell(int(row[0]) + 1, 11, "ok")
             print(f"Stored encrypted credentials for {row[1]} credential in Google Sheet.")
@@ -36,7 +36,7 @@ def decrypt_account(user_id):
     all_rows = sheet.get_all_values()
 
     for row in all_rows:
-        if row and row[0] == user_id:
+        if row and row[18] == user_id:
             if not row[9]:
                 raise ValueError(f"No encrypted data found for {user_id}")
 
