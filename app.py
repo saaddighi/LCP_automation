@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, flash
 from threading import Thread
 from emailer.email_sheet import sheet
 from emailer.mailer import welcome_email
+from bot.discord_bot import run_bot
 
 app = Flask(__name__)
 app.secret_key = "super_secret_key"
@@ -31,7 +32,7 @@ def signup():
         sheet.append_row([next_id, full_name, email])
         cell = sheet.find(email)
         row_index = cell.row
-        sheet.update_cell(row_index, 16, discord_id)
+        sheet.update_cell(row_index, 19, discord_id)
         sheet.update_cell(row_index, 6, has_traded)
         flash("✅ Successfully signed up!")
         return redirect('/signup')
@@ -43,4 +44,5 @@ def run_flask():
 
 if __name__ == '__main__':
     Thread(target=welcome_email, daemon=True).start()
+    Thread(target=run_bot, daemon=True).start()
     run_flask()
