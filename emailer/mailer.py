@@ -48,7 +48,8 @@ def welcome_email():
                             yag.send(to=recipient_email, subject=subject, contents=body)
                             print(f"Email sent to {recipient_email} for row {row_index + 1}")
                             sheet.update_cell(int(new_row[0]) + 1, 17, "sent")
-                            sheet.update_cell(int(new_row[0]) + 1, 4, "cohort_2")
+                            sheet.update_cell(int(new_row[0]) + 1, 4, "2")
+                            sheet.update_cell(int(new_row[0]) + 1, 5, "active")
 
                 previous_row_count = current_row_count
                 
@@ -65,7 +66,7 @@ def first_assessment_email(traderid):
     credentials = decrypt_account(id)
     data = sheet.get_all_values()
     for row in data:
-        if row[0] == id:
+        if row[18] == id:
             recipient_email = row[2]
             name = row[1]
             subject = "Your TM5 Trading Account Credentials"
