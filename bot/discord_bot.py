@@ -282,7 +282,7 @@ async def on_member_join(member):
                         await salon.set_permissions(member, read_messages=True, send_messages=True)
                         
                         # === MESSAGE DANS LE SALON PRIVÉ ===
-                        await salon.send(f"🎉 **BIENVENUE {member.mention} DANS LA COHORTE {cohorte} !**\n\nNous sommes ravis de vous accueillir dans votre espace de trading privé ! 📈\n\nN'hésitez pas à vous présenter et à explorer les ressources disponibles. Bon trading ! 🚀")
+                        await salon.send(f"🎉 **BIENVENUE {member.mention} DANS LA COHORTE {cohorte} !**\n\nNous sommes ravis de vous accueillir dans votre espace de trading privé \n\nVeuillez vérifier votre courrier électronique pour vos identifiants d'accès à l'évaluation 1 📈\n\nN'hésitez pas à vous présenter et à explorer les ressources disponibles. Bon trading ! 🚀")
                     
                     await member.send(f"✅ **ACCÈS ACTIVÉ !**\n\nVous avez été automatiquement assigné à la **Cohort {cohorte}** et avez maintenant accès à votre salon privé.\n\nUtilisez `/help` pour découvrir toutes les commandes disponibles.")
                     print(f"✅ Rôle assigné: Cohorte {cohorte}")
@@ -316,3 +316,4 @@ print("🔄 Auto-ping activé!")
 
 def run_bot():
     bot.run("TOKEN")
+
