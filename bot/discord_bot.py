@@ -317,3 +317,4 @@ print("🔄 Auto-ping activé!")
 def run_bot():
     bot.run("TOKEN")
 
+
