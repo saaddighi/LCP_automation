@@ -237,8 +237,8 @@ async def ajouter_a_assessment2(discord_username):
     for guild in bot.guilds:
         for member in guild.members:
             if member.name.lower() == discord_username.lower():
-                role = discord.utils.get(guild.roles, name="Cohorte 2")
-                salon = discord.utils.get(guild.channels, name="cohorte-2-privee")
+                role = discord.utils.get(guild.roles, name="Assessment 2")
+                salon = discord.utils.get(guild.channels, name="assessment-2")
 
                 if role:
                     await member.add_roles(role)
@@ -349,5 +349,6 @@ ping_thread.start()
 print("🔄 Auto-ping activé!")
 
 bot.run(TOKEN)
+
 
 
