@@ -1,7 +1,3 @@
-#!/usr/bin/env python3
-"""
-Lanceur pour le monitoring Assessment 2 ET Assessment 3
-"""
 
 import sys
 import os
